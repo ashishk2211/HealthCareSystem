@@ -9,29 +9,35 @@ import java.util.Map;
 import com.capgemini.healthcaresystem.dto.DiagnosticCenter;
 import com.capgemini.healthcaresystem.exception.DiagnosticCenterException;
 import com.capgemini.healthcaresystem.util.DiagnosticCenterDB;
-import com.capgemini.healthcaresystem.util.DiagnosticCenterRepositery;
+
 
 public class DiagnosticCenterDao {
 	
-	public boolean addCenter(DiagnosticCenter center)
+	public boolean addCenter(DiagnosticCenter center) throws DiagnosticCenterException
 	{	
-		boolean result=DiagnosticCenterDB.getDiagnosticMap().put(center.getCenterId(),center)==null;
-				if(result)
-				return true;
-		else
-			return false;
-	
+		if(new ValidateDiagnosticCenterDao().validateCenterName(center.getCenterName()))
+		{
+			if(new ValidateDiagnosticCenterDao().validateCenterId(center.getCenterId()))
+			{
+				if(new ValidateDiagnosticCenterDao().validateTest(center.getListOfTests()))
+				{
+					DiagnosticCenterDB.getDiagnosticMap().put(center.getCenterId(),center);
+					if(DiagnosticCenterDB.getDiagnosticMap().containsKey(center.getCenterId()))
+						return true;
+				}
+			throw new DiagnosticCenterException("Test cannot be null");
+	}
+			 throw new DiagnosticCenterException("Center Id cannot be null");
+	}
+		throw new DiagnosticCenterException("Center name cannot be null");
 	}
 	
 	public DiagnosticCenter displayDiagnosticCenter(String centerId) throws DiagnosticCenterException
 	{
 		Map<String,DiagnosticCenter> centerMap=new HashMap<String,DiagnosticCenter>();
 		centerMap=DiagnosticCenterDB.getDiagnosticMap();
-		 for (Map.Entry<String,DiagnosticCenter> entry : centerMap.entrySet())
-		 {
-			 if(entry.getKey().equals(centerId));
-			 	return entry.getValue();
-		 }
+			if(centerMap.containsKey(centerId))
+				return centerMap.get(centerId);
 		 throw new DiagnosticCenterException("CenterId not present");
 	}
 	
@@ -41,14 +47,12 @@ public class DiagnosticCenterDao {
    
 		Map<String,DiagnosticCenter> map=new HashMap<String,DiagnosticCenter>();
 		map=DiagnosticCenterDB.getDiagnosticMap();
-		for(Map.Entry<String,DiagnosticCenter> entry: map.entrySet())
+		if(map.containsKey(centerId))
 		{
-			if(entry.getKey().equals(centerId))
-			{
-				map.remove(entry.getKey(),entry.getValue());
-				return true;
-			}
+			map.remove(centerId);
+			return true;
 		}
+		else
 		return false;
 		
 	}

@@ -1,7 +1,9 @@
 package com.capgemini.healthcaresystem.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.capgemini.healthcaresystem.dto.DiagnosticCenter;
@@ -12,15 +14,17 @@ import com.capgemini.healthcaresystem.util.DiagnosticCenterDB;
 
 
 public class UserInterface {
+	DiagnosticCenterDB db=new DiagnosticCenterDB();
 	void mainFunction() throws DiagnosticCenterException
 	{
-		new DiagnosticCenterDB();
+		
 		Scanner sc=new Scanner(System.in);
 		Scanner scint=new Scanner(System.in);
 		
 		System.out.println("Press 1 to Add Diagnostic Center");
 		System.out.println("Press 2 to Remove Diagnostic Center");
 		System.out.println("Press 3 to terminate the session");
+		System.out.println("Press 4 to display the repositery");
 		int choice=scint.nextInt();
 		switch(choice)
 		{
@@ -28,7 +32,7 @@ public class UserInterface {
 				String	centerId=sc.nextLine();
 				System.out.println("Enter the Center Name");
 				String	centerName=sc.nextLine();
-				if(new DiagnosticCenterServices().addDiagnosticCenter(new DiagnosticCenter(centerId,centerName,
+				if(new DiagnosticCenterServices().addDiagnosticCenter(new DiagnosticCenter(centerName,centerId,
 						DiagnosticCenterDB.getTestRepositery())))
 				{
 					System.out.println("DiagnosticCenter Added Succescfully");
@@ -42,16 +46,12 @@ public class UserInterface {
 				
 		case 2: System.out.println("Enter centerId to remove:");
 				String id=sc.nextLine();
-				List<DiagnosticCenter> listDiagnostic=new ArrayList<DiagnosticCenter>();
-				listDiagnostic=new DiagnosticCenterServices().displayList(id);
-				for(DiagnosticCenter d:listDiagnostic)
-				{
-					System.out.println(d.getCenterId()+" "+d.getCenterName());
-					for(DiagnosticTest t:d.getListOfTests())
+				DiagnosticCenter obj=new DiagnosticCenterServices().displayList(id);
+					System.out.println(obj.getCenterId()+" "+obj.getCenterName());
+					for(DiagnosticTest t:obj.getListOfTests())
 					{
 						System.out.println(t.getTestId()+" "+t.getTestName());
 					}
-				} 
 				System.out.println("Press 1 to delete the above Diagnostic Center");
 				int enter=scint.nextInt();
 				if(enter==1) {
@@ -60,14 +60,22 @@ public class UserInterface {
 				else
 					throw new DiagnosticCenterException("No such id present");
 				}
-				else
-				
-				
 				mainFunction();
 				break;
 		
 		case 3: System.out.println("Terminated");
 				return;
+		
+		case 4: Map<String,DiagnosticCenter> map=new HashMap<String,DiagnosticCenter>();
+				map=DiagnosticCenterDB.getDiagnosticMap();
+				for(Map.Entry<String,DiagnosticCenter> entry:map.entrySet())
+				{
+					System.out.println(entry.getKey()+" "+entry.getValue().getCenterName());
+
+				}
+				mainFunction();
+				break;
+		
 		
 				
 		default: System.out.println("Invalid input");

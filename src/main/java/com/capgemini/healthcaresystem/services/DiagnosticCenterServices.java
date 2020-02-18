@@ -15,16 +15,22 @@ public class DiagnosticCenterServices {
 	public boolean addDiagnosticCenter(DiagnosticCenter center) throws DiagnosticCenterException
 	{
 		if(new ValidateDiagnosticCenterServices().validateCenterId(center.getCenterId()))
+		{
 			if(new ValidateDiagnosticCenterServices().validateCenterName(center.getCenterName()))
 			{
+				if(new ValidateDiagnosticCenterServices().validateTest(center.getListOfTests()))
+				{
 				boolean result=new DiagnosticCenterDao().addCenter(center);
-				
 				if(result){
 					return true;
 				}
-			throw new DiagnosticCenterException("Center name cannot be null");
+
 		}
+				throw new DiagnosticCenterException("Test cannot be null");
+			}
 		throw new DiagnosticCenterException("Center Id cannot be null");
+		}
+		throw new DiagnosticCenterException("Center name cannot be null");
 	}
 
 	
@@ -36,14 +42,16 @@ public class DiagnosticCenterServices {
 			return false;
 	}
 	
-	public List<DiagnosticCenter> displayList(String centerId) throws DiagnosticCenterException
+	public DiagnosticCenter displayList(String centerId) throws DiagnosticCenterException
 	{
-		List<DiagnosticCenter> centerList=new ArrayList<DiagnosticCenter>();
-		
-		if(centerList.add(new DiagnosticCenterDao().displayDiagnosticCenter(centerId)))
-			return centerList;
-		else
-			throw new DiagnosticCenterException("CenterId not present");		
+		try {
+			return new DiagnosticCenterDao().displayDiagnosticCenter(centerId);
+			}
+		catch(DiagnosticCenterException e)
+		{
+			throw new DiagnosticCenterException("CenterId not present");	
+		}
+				
 	}
 
 }
