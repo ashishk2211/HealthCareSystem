@@ -1,46 +1,49 @@
 package com.capgemini.healthcaresystem.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.capgemini.healthcaresystem.dao.DiagnosticCenterDao;
 import com.capgemini.healthcaresystem.dto.DiagnosticCenter;
-import com.capgemini.healthcaresystem.util.DiagnosticCenterRepositery;
+import com.capgemini.healthcaresystem.exception.DiagnosticCenterException;
+
 
 public class DiagnosticCenterServices {
 	
-	public boolean addDiagnosticCenter(DiagnosticCenter center)
+	public boolean addDiagnosticCenter(DiagnosticCenter center) throws DiagnosticCenterException
 	{
 		if(new ValidateDiagnosticCenterServices().validateCenterId(center.getCenterId()))
-		{
 			if(new ValidateDiagnosticCenterServices().validateCenterName(center.getCenterName()))
 			{
-				if(new DiagnosticCenterDao().addCenter(center))
-				{
+				boolean result=new DiagnosticCenterDao().addCenter(center);
+				
+				if(result){
 					return true;
 				}
-			}
-			return false;
+			throw new DiagnosticCenterException("Center name cannot be null");
 		}
-		return false;
+		throw new DiagnosticCenterException("Center Id cannot be null");
 	}
-	public boolean searchDiagnosticCenter(String centerId)
-	{
-		if(new DiagnosticCenterDao().searchDiagnosticCenter(centerId))
-		{
-			return true;
-		}
-		else 
-			return false;
-					
-	}
+
 	
-	public boolean removeDiagnosticCenter(String centerId)
+	public boolean removeDiagnosticCenter(String centerId) 
 	{
 		if(new DiagnosticCenterDao().removeCenter(centerId))
 			return true;
 		else
 			return false;
+	}
+	
+	public List<DiagnosticCenter> displayList(String centerId) throws DiagnosticCenterException
+	{
+		List<DiagnosticCenter> centerList=new ArrayList<DiagnosticCenter>();
+		
+		if(centerList.add(new DiagnosticCenterDao().displayDiagnosticCenter(centerId)))
+			return centerList;
+		else
+			throw new DiagnosticCenterException("CenterId not present");		
 	}
 
 }

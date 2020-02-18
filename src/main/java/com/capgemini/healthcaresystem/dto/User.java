@@ -7,12 +7,8 @@ public class User {
         private String userId, userPassword, userRole, userName, emailId, contactNo;
         private List<DiagnosticCenter> centerList;
         
-        public User(/*String userId, String userPassword, String userRole,*/ String userName, String emailId,
-                        String contactNo) {
+        public User( String userName, String emailId,String contactNo) {
                 
-                //this.userId = userId;
-                //this.userPassword = userPassword;
-                //this.userRole = userRole;
                 this.userName = userName;
                 this.emailId = emailId;
                 this.contactNo = contactNo;

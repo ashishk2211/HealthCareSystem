@@ -4,9 +4,9 @@ import java.util.*;
 
 public class DiagnosticCenter {
 	private String centerName,centerId;
-	private List<Test> ListOfTests=new ArrayList();
+	private List<DiagnosticTest> ListOfTests=new ArrayList();
 	
-	public DiagnosticCenter(String centerName, String centerId, List<Test> listOfTests) {
+	public DiagnosticCenter(String centerName, String centerId, List<DiagnosticTest> listOfTests) {
 		super();
 		this.centerName = centerName;
 		this.centerId = centerId;
@@ -25,10 +25,10 @@ public class DiagnosticCenter {
 	public void setCenterId(String centerId) {
 		this.centerId = centerId;
 	}
-	public List<Test> getListOfTests() {
+	public List<DiagnosticTest> getListOfTests() {
 		return ListOfTests;
 	}
-	public void setListOfTests(List<Test> listOfTests) {
+	public void setListOfTests(List<DiagnosticTest> listOfTests) {
 		ListOfTests = listOfTests;
 	}
 	

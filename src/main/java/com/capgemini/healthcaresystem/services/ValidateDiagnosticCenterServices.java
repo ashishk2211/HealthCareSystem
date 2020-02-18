@@ -2,13 +2,13 @@ package com.capgemini.healthcaresystem.services;
 
 import java.util.List;
 
-import com.capgemini.healthcaresystem.dto.Test;
+import com.capgemini.healthcaresystem.dto.DiagnosticTest;
 
 public class ValidateDiagnosticCenterServices {
 	
 	boolean validateCenterName(String centerName)
 	{
-		if(centerName.length()==0)
+		if(centerName.isEmpty())
 			return false;
 		else 
 			return true;
@@ -16,13 +16,13 @@ public class ValidateDiagnosticCenterServices {
 	
 	boolean validateCenterId(String centerId)
 	{
-		if(centerId.length()==0)
+		if(centerId.isEmpty())
 			return false;
 		else 
 			return true;
 	}
 	
-	boolean validateTest(List<Test> test)
+	boolean validateTest(List<DiagnosticTest> test)
 	{
 		if(test.size()==3)
 			return true;

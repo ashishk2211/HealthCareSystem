@@ -7,65 +7,50 @@ import java.util.List;
 import java.util.Map;
 
 import com.capgemini.healthcaresystem.dto.DiagnosticCenter;
+import com.capgemini.healthcaresystem.exception.DiagnosticCenterException;
+import com.capgemini.healthcaresystem.util.DiagnosticCenterDB;
 import com.capgemini.healthcaresystem.util.DiagnosticCenterRepositery;
 
 public class DiagnosticCenterDao {
 	
 	public boolean addCenter(DiagnosticCenter center)
-	{	if(new ValidateDiagnosticCenterDao().validateCenterId(center.getCenterId()))
-		{	
-			if(new ValidateDiagnosticCenterDao().validateCenterId(center.getCenterName()))
-			{
-				new DiagnosticCenterRepositery().putDiagnosticCenter(center);
-			}
-		else	
+	{	
+		boolean result=DiagnosticCenterDB.getDiagnosticMap().put(center.getCenterId(),center)==null;
+				if(result)
+				return true;
+		else
 			return false;
-	}
-	return false;
 	
 	}
-	public List<DiagnosticCenter> displayList()
-	{
-		List<DiagnosticCenter> centerList=new ArrayList<DiagnosticCenter>();
-		Map<String,DiagnosticCenter> centerMap=new HashMap<String,DiagnosticCenter>();
-		centerMap=new DiagnosticCenterRepositery().getDiagnosticMap();
-		 for (Map.Entry<String,DiagnosticCenter> entry : centerMap.entrySet())
-		 {
-			 centerList.add(entry.getValue());
-		 }
-		 return centerList;	
-	}
 	
-	public boolean searchDiagnosticCenter(String centerId)
+	public DiagnosticCenter displayDiagnosticCenter(String centerId) throws DiagnosticCenterException
 	{
 		Map<String,DiagnosticCenter> centerMap=new HashMap<String,DiagnosticCenter>();
-		centerMap=new DiagnosticCenterRepositery().getDiagnosticMap();
+		centerMap=DiagnosticCenterDB.getDiagnosticMap();
 		 for (Map.Entry<String,DiagnosticCenter> entry : centerMap.entrySet())
 		 {
 			 if(entry.getKey().equals(centerId));
-			 	return true;
+			 	return entry.getValue();
 		 }
-		 return false;
+		 throw new DiagnosticCenterException("CenterId not present");
 	}
 	
 
-	
 	public boolean removeCenter(String centerId)
 	{
-		  Iterator<Map.Entry<String,DiagnosticCenter> > 
-          iterator = new DiagnosticCenterRepositery().getDiagnosticMap().entrySet().iterator(); 
- 
-      while (iterator.hasNext()) { 
-
-          Map.Entry<String,DiagnosticCenter>  entry  = iterator.next(); 
-
-          if (centerId == entry.getKey()) { 
-
-              iterator.remove(); 
-              return true;
-          } 
-      } 
-      return false;
+   
+		Map<String,DiagnosticCenter> map=new HashMap<String,DiagnosticCenter>();
+		map=DiagnosticCenterDB.getDiagnosticMap();
+		for(Map.Entry<String,DiagnosticCenter> entry: map.entrySet())
+		{
+			if(entry.getKey().equals(centerId))
+			{
+				map.remove(entry.getKey(),entry.getValue());
+				return true;
+			}
+		}
+		return false;
+		
 	}
 
 }

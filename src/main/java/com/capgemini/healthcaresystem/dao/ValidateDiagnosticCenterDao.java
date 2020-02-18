@@ -1,7 +1,7 @@
 package com.capgemini.healthcaresystem.dao;
 import java.util.List;
 
-import  com.capgemini.healthcaresystem.dto.Test;
+import  com.capgemini.healthcaresystem.dto.DiagnosticTest;
 public class ValidateDiagnosticCenterDao {
 	boolean validateCenterName(String centerName)
 	{
@@ -18,7 +18,7 @@ public class ValidateDiagnosticCenterDao {
 		else 
 			return true;
 	}
-	boolean validateTest(List<Test> test)
+	boolean validateTest(List<DiagnosticTest> test)
 	{
 		if(test.size()==3)
 			return true;
