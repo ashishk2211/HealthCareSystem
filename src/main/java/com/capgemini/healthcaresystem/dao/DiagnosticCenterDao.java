@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.capgemini.healthcaresystem.dto.DiagnosticCenter;
+import com.capgemini.healthcaresystem.dto.DiagnosticTest;
 import com.capgemini.healthcaresystem.exception.DiagnosticCenterException;
 import com.capgemini.healthcaresystem.util.DiagnosticCenterDB;
 
@@ -41,6 +42,11 @@ public class DiagnosticCenterDao {
 		 throw new DiagnosticCenterException("CenterId not present");
 	}
 	
+	public Map<String,DiagnosticCenter> returnRepositery()
+	{
+		return DiagnosticCenterDB.getDiagnosticMap();
+	}
+	
 
 	public boolean removeCenter(String centerId)
 	{
@@ -56,5 +62,11 @@ public class DiagnosticCenterDao {
 		return false;
 		
 	}
+	
+	public List<DiagnosticTest> returnTestRepositery()
+	{
+		return DiagnosticCenterDB.getTestRepositery();
+	}
+			
 
 }

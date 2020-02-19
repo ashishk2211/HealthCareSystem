@@ -44,4 +44,19 @@ public class TestDiagnosticCenterdao {
 			assertEquals(false,new DiagnosticCenterDao().removeCenter(centerId2));	
 			
 		}
+		@Test
+		void displayDiagnosticCenterTest() 
+		{
+			DiagnosticCenter obj=new DiagnosticCenter("AIIMS","1001",new DiagnosticCenterDao().returnTestRepositery());
+			String id1="1001";
+			String id2="101";
+			try {
+			assertTrue(obj.equals(new DiagnosticCenterDao().displayDiagnosticCenter(id1)));
+			}
+			catch(DiagnosticCenterException e)
+			{
+				
+			}
+			assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterDao().displayDiagnosticCenter(id2);});
+		}
 }

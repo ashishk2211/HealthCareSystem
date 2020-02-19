@@ -10,6 +10,8 @@ import com.capgemini.healthcaresystem.util.DiagnosticCenterDB;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -53,6 +55,32 @@ public class TestDiagnosticCenterServices {
 		assertEquals(true,new DiagnosticCenterServices().removeDiagnosticCenter(centerId1));
 		assertEquals(false,new DiagnosticCenterServices().removeDiagnosticCenter(centerId2));
 		
+	}
+	
+	@Test
+	void displayDiagnosticCenterServicesTest() 
+	{
+		List<DiagnosticTest> test=new ArrayList<DiagnosticTest>();
+		   DiagnosticTest testobj1=new DiagnosticTest("101","Blood Group");
+           DiagnosticTest testobj2=new DiagnosticTest("102","Blood Sugar");
+           DiagnosticTest testobj3=new DiagnosticTest("103","Blood Pressure");
+           
+           test.add(testobj1);
+           test.add(testobj2);
+           test.add(testobj3);
+		
+		
+		DiagnosticCenter obj=new DiagnosticCenter("AIIMS","1001",test);
+		String id1="1001";
+		String id2="101";
+		try {
+		assertTrue(obj.equals(new DiagnosticCenterServices().displayList(id1)));
+		}
+		catch(DiagnosticCenterException e)
+		{
+			
+		}
+		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServices().displayList(id2);});
 	}
 
 }

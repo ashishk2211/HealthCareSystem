@@ -33,7 +33,7 @@ public class UserInterface {
 				System.out.println("Enter the Center Name");
 				String	centerName=sc.nextLine();
 				if(new DiagnosticCenterServices().addDiagnosticCenter(new DiagnosticCenter(centerName,centerId,
-						DiagnosticCenterDB.getTestRepositery())))
+						new DiagnosticCenterServices().returnTestRepositeryServices())))
 				{
 					System.out.println("DiagnosticCenter Added Succescfully");
 				} 
@@ -67,7 +67,7 @@ public class UserInterface {
 				return;
 		
 		case 4: Map<String,DiagnosticCenter> map=new HashMap<String,DiagnosticCenter>();
-				map=DiagnosticCenterDB.getDiagnosticMap();
+				map=new DiagnosticCenterServices().returnRepositeryServices();
 				for(Map.Entry<String,DiagnosticCenter> entry:map.entrySet())
 				{
 					System.out.println(entry.getKey()+" "+entry.getValue().getCenterName());
