@@ -32,33 +32,40 @@ public class UserInterface {
 				String	centerId=sc.nextLine();
 				System.out.println("Enter the Center Name");
 				String	centerName=sc.nextLine();
-				if(new DiagnosticCenterServices().addDiagnosticCenter(new DiagnosticCenter(centerName,centerId,
-						new DiagnosticCenterServices().returnTestRepositeryServices())))
-				{
-					System.out.println("DiagnosticCenter Added Succescfully");
-				} 
-				else {
-					throw new DiagnosticCenterException("Task couldn't be completed");
-				}		 
+				try {
+					if(new DiagnosticCenterServices().addDiagnosticCenter(new DiagnosticCenter(centerName,centerId,
+							new DiagnosticCenterServices().returnTestRepositeryServices())))
+					{
+						System.out.println("DiagnosticCenter Added Succescfully");
+					}
+				}
+				catch(DiagnosticCenterException e) {
+					System.out.println(e.getMessage());
+				}
+				 
+			
 				mainFunction();
 				break;
 			
 				
 		case 2: System.out.println("Enter centerId to remove:");
 				String id=sc.nextLine();
+				try {
 				DiagnosticCenter obj=new DiagnosticCenterServices().displayList(id);
-					System.out.println(obj.getCenterId()+" "+obj.getCenterName());
-					for(DiagnosticTest t:obj.getListOfTests())
-					{
-						System.out.println(t.getTestId()+" "+t.getTestName());
-					}
+				}
+				catch(DiagnosticCenterException e) {
+					System.out.println(e.getMessage());
+				}
 				System.out.println("Press 1 to delete the above Diagnostic Center");
 				int enter=scint.nextInt();
 				if(enter==1) {
+					try {
 				if(new DiagnosticCenterServices().removeDiagnosticCenter(id))
 					System.out.println("Deletion successfull");
-				else
-					throw new DiagnosticCenterException("No such id present");
+					}
+					catch(DiagnosticCenterException e) {
+						System.out.println(e.getMessage());
+					}
 				}
 				mainFunction();
 				break;

@@ -28,9 +28,9 @@ public class TestDiagnosticCenterdao {
 			testList.add(new DiagnosticTest("103","Blood Pressure"));
 			
 			assertEquals(true,new DiagnosticCenterDao().addCenter(new DiagnosticCenter("AIIMS","1007",testList)));
-			assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterDao().addCenter(new DiagnosticCenter("","AIIMS",testList));});		
-			assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterDao().addCenter(new DiagnosticCenter("Max","",testList));});
-			assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterDao().addCenter(new DiagnosticCenter("Max","",null));});
+			assertEquals(false,new DiagnosticCenterDao().addCenter(new DiagnosticCenter("","AIIMS",testList)));
+			assertEquals(false,new DiagnosticCenterDao().addCenter(new DiagnosticCenter("Max","",testList)));
+			assertEquals(false,new DiagnosticCenterDao().addCenter(new DiagnosticCenter("Max","",null)));
 		}
 		
 		
@@ -45,7 +45,7 @@ public class TestDiagnosticCenterdao {
 			
 		}
 		@Test
-		void displayDiagnosticCenterTest() 
+		void displayDiagnosticCenterTest() throws DiagnosticCenterException 
 		{
 			DiagnosticCenter obj=new DiagnosticCenter("AIIMS","1001",new DiagnosticCenterDao().returnTestRepositery());
 			String id1="1001";
@@ -58,5 +58,6 @@ public class TestDiagnosticCenterdao {
 				
 			}
 			assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterDao().displayDiagnosticCenter(id2);});
+		
 		}
 }

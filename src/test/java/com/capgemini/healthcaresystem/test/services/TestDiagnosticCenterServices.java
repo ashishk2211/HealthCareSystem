@@ -46,14 +46,15 @@ public class TestDiagnosticCenterServices {
 	}
 	
 	@Test
-	void removeDiagnosticCenterServices()
+	void removeDiagnosticCenterServices() throws DiagnosticCenterException
 	{
 
 		String centerId1="1005";
 		String centerId2="101";
 		
 		assertEquals(true,new DiagnosticCenterServices().removeDiagnosticCenter(centerId1));
-		assertEquals(false,new DiagnosticCenterServices().removeDiagnosticCenter(centerId2));
+		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServices().removeDiagnosticCenter(centerId2);});
+	//	assertEquals(false,new DiagnosticCenterServices().removeDiagnosticCenter(centerId2));
 		
 	}
 	

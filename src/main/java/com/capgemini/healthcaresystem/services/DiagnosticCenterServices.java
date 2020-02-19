@@ -36,12 +36,12 @@ public class DiagnosticCenterServices {
 	}
 
 	
-	public boolean removeDiagnosticCenter(String centerId) 
+	public boolean removeDiagnosticCenter(String centerId) throws DiagnosticCenterException 
 	{
 		if(new DiagnosticCenterDao().removeCenter(centerId))
 			return true;
 		else
-			return false;
+			throw new DiagnosticCenterException("Center Id not present");
 	}
 	
 	public DiagnosticCenter displayList(String centerId) throws DiagnosticCenterException

@@ -10,11 +10,11 @@ import com.capgemini.healthcaresystem.dto.DiagnosticCenter;
 import com.capgemini.healthcaresystem.dto.DiagnosticTest;
 import com.capgemini.healthcaresystem.exception.DiagnosticCenterException;
 import com.capgemini.healthcaresystem.util.DiagnosticCenterDB;
-
+ 
 
 public class DiagnosticCenterDao {
 	
-	public boolean addCenter(DiagnosticCenter center) throws DiagnosticCenterException
+	public boolean addCenter(DiagnosticCenter center) 
 	{	
 		if(new ValidateDiagnosticCenterDao().validateCenterName(center.getCenterName()))
 		{
@@ -26,11 +26,11 @@ public class DiagnosticCenterDao {
 					if(DiagnosticCenterDB.getDiagnosticMap().containsKey(center.getCenterId()))
 						return true;
 				}
-			throw new DiagnosticCenterException("Test cannot be null");
+			return false;
 	}
-			 throw new DiagnosticCenterException("Center Id cannot be null");
+			return false;
 	}
-		throw new DiagnosticCenterException("Center name cannot be null");
+		return false;
 	}
 	
 	public DiagnosticCenter displayDiagnosticCenter(String centerId) throws DiagnosticCenterException
@@ -39,7 +39,7 @@ public class DiagnosticCenterDao {
 		centerMap=DiagnosticCenterDB.getDiagnosticMap();
 			if(centerMap.containsKey(centerId))
 				return centerMap.get(centerId);
-		 throw new DiagnosticCenterException("CenterId not present");
+		throw new DiagnosticCenterException("CenterId not present");			
 	}
 	
 	public Map<String,DiagnosticCenter> returnRepositery()
