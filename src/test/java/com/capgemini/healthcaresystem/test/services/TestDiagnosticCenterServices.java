@@ -1,11 +1,11 @@
 package com.capgemini.healthcaresystem.test.services;
 
 
-import com.capgemini.healthcaresystem.dao.DiagnosticCenterDao;
+import com.capgemini.healthcaresystem.dao.DiagnosticCenterDaoImplementation;
 import com.capgemini.healthcaresystem.dto.DiagnosticCenter;
 import com.capgemini.healthcaresystem.dto.DiagnosticTest;
 import com.capgemini.healthcaresystem.exception.DiagnosticCenterException;
-import com.capgemini.healthcaresystem.services.DiagnosticCenterServices;
+import com.capgemini.healthcaresystem.services.DiagnosticCenterServicesImplementation;
 import com.capgemini.healthcaresystem.util.DiagnosticCenterDB;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -34,14 +34,16 @@ public class TestDiagnosticCenterServices {
 		testList.add(new DiagnosticTest("102","Blood Sugar"));
 		testList.add(new DiagnosticTest("103","Blood Pressure"));
 		
-		DiagnosticCenter center1=new DiagnosticCenter("AIIMS","1006",testList);
-		DiagnosticCenter center2=new DiagnosticCenter("","1009",testList);
+		DiagnosticCenter center1=new DiagnosticCenter("Ashish","1001",testList);
+		DiagnosticCenter center2=new DiagnosticCenter("","1007",testList);
 		DiagnosticCenter center3=new DiagnosticCenter("Max","",testList);
 		DiagnosticCenter center4=new DiagnosticCenter("Max","1002",testList2);
-		assertEquals(true,new DiagnosticCenterServices().addDiagnosticCenter(center1));
-		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServices().addDiagnosticCenter(center3);});
-		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServices().addDiagnosticCenter(center2);});
-		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServices().addDiagnosticCenter(center4);});	
+		
+		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServicesImplementation().addDiagnosticCenter(center3);});
+		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServicesImplementation().addDiagnosticCenter(center2);});
+		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServicesImplementation().addDiagnosticCenter(center4);});
+		assertEquals(true,new DiagnosticCenterServicesImplementation().addDiagnosticCenter(center1));
+			
 		
 	}
 	
@@ -52,9 +54,9 @@ public class TestDiagnosticCenterServices {
 		String centerId1="1005";
 		String centerId2="101";
 		
-		assertEquals(true,new DiagnosticCenterServices().removeDiagnosticCenter(centerId1));
-		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServices().removeDiagnosticCenter(centerId2);});
-	//	assertEquals(false,new DiagnosticCenterServices().removeDiagnosticCenter(centerId2));
+		assertEquals(true,new DiagnosticCenterServicesImplementation().removeDiagnosticCenter(centerId1));
+		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServicesImplementation().removeDiagnosticCenter(centerId2);});
+		
 		
 	}
 	
@@ -75,13 +77,13 @@ public class TestDiagnosticCenterServices {
 		String id1="1001";
 		String id2="101";
 		try {
-		assertTrue(obj.equals(new DiagnosticCenterServices().displayList(id1)));
+		assertTrue(obj.equals(new DiagnosticCenterServicesImplementation().displayList(id1)));
 		}
 		catch(DiagnosticCenterException e)
 		{
 			
 		}
-		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServices().displayList(id2);});
+		assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterServicesImplementation().displayList(id2);});
 	}
 
 }

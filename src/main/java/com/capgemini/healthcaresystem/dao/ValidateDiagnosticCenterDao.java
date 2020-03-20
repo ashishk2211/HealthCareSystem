@@ -2,6 +2,7 @@ package com.capgemini.healthcaresystem.dao;
 import java.util.List;
 
 import  com.capgemini.healthcaresystem.dto.DiagnosticTest;
+import com.capgemini.healthcaresystem.services.DiagnosticCenterServicesImplementation;
 public class ValidateDiagnosticCenterDao {
 	boolean validateCenterName(String centerName)
 	{
@@ -17,13 +18,23 @@ public class ValidateDiagnosticCenterDao {
 			return false;
 		else 
 			return true;
-	}
+	} 
 	boolean validateTest(List<DiagnosticTest> test)
 	{
+		
 		if(test.size()==3)
 			return true;
 		else
 			return false;
 	}
+	
+	boolean ValidateCenterIsPresent(String key)
+	{
+		if(new DiagnosticCenterServicesImplementation().returnRepositeryServices().containsKey(key))
+			return false;
+		else
+			return true;
+	
+	}		
 
 }

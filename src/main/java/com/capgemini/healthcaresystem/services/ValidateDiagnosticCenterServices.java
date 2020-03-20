@@ -1,5 +1,6 @@
 package com.capgemini.healthcaresystem.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.capgemini.healthcaresystem.dto.DiagnosticTest;
@@ -24,9 +25,23 @@ public class ValidateDiagnosticCenterServices {
 	
 	boolean validateTest(List<DiagnosticTest> test)
 	{
+		
 		if(test.size()==3)
 			return true;
 		else
 			return false;
-	}
+	} 
+	
+	
+	boolean ValidateCenterIsPresent(String key)
+	{
+		if(new DiagnosticCenterServicesImplementation().returnRepositeryServices().containsKey(key))
+			return false;
+		else
+			return true;
+	
+	}		
+	
+	
+	
 }

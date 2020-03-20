@@ -1,10 +1,10 @@
 package com.capgemini.healthcaresystem.test.dao;
 
-import com.capgemini.healthcaresystem.dao.DiagnosticCenterDao;
+import com.capgemini.healthcaresystem.dao.DiagnosticCenterDaoImplementation;
 import com.capgemini.healthcaresystem.dto.DiagnosticCenter;
 import com.capgemini.healthcaresystem.dto.DiagnosticTest;
 import com.capgemini.healthcaresystem.exception.DiagnosticCenterException;
-import com.capgemini.healthcaresystem.services.DiagnosticCenterServices;
+import com.capgemini.healthcaresystem.services.DiagnosticCenterServicesImplementation;
 import com.capgemini.healthcaresystem.util.DiagnosticCenterDB;
 
 
@@ -27,10 +27,10 @@ public class TestDiagnosticCenterdao {
 			testList.add(new DiagnosticTest("102","Blood Sugar"));
 			testList.add(new DiagnosticTest("103","Blood Pressure"));
 			
-			assertEquals(true,new DiagnosticCenterDao().addCenter(new DiagnosticCenter("AIIMS","1007",testList)));
-			assertEquals(false,new DiagnosticCenterDao().addCenter(new DiagnosticCenter("","AIIMS",testList)));
-			assertEquals(false,new DiagnosticCenterDao().addCenter(new DiagnosticCenter("Max","",testList)));
-			assertEquals(false,new DiagnosticCenterDao().addCenter(new DiagnosticCenter("Max","",null)));
+			assertEquals(true,new DiagnosticCenterDaoImplementation().addCenter(new DiagnosticCenter("AIIMS","1007",testList)));
+			assertEquals(false,new DiagnosticCenterDaoImplementation().addCenter(new DiagnosticCenter("","AIIMS",testList)));
+			assertEquals(false,new DiagnosticCenterDaoImplementation().addCenter(new DiagnosticCenter("Max","",testList)));
+			assertEquals(false,new DiagnosticCenterDaoImplementation().addCenter(new DiagnosticCenter("Max","",null)));
 		}
 		
 		
@@ -40,24 +40,24 @@ public class TestDiagnosticCenterdao {
 			new DiagnosticCenterDB();
 			String centerId="1001";
 			String centerId2="101";
-			assertEquals(true,new DiagnosticCenterDao().removeCenter(centerId));
-			assertEquals(false,new DiagnosticCenterDao().removeCenter(centerId2));	
+			assertEquals(true,new DiagnosticCenterDaoImplementation().removeCenter(centerId));
+			assertEquals(false,new DiagnosticCenterDaoImplementation().removeCenter(centerId2));	
 			
 		}
 		@Test
 		void displayDiagnosticCenterTest() throws DiagnosticCenterException 
 		{
-			DiagnosticCenter obj=new DiagnosticCenter("AIIMS","1001",new DiagnosticCenterDao().returnTestRepositery());
+			DiagnosticCenter obj=new DiagnosticCenter("AIIMS","1001",new DiagnosticCenterDaoImplementation().returnTestRepositery());
 			String id1="1001";
 			String id2="101";
 			try {
-			assertTrue(obj.equals(new DiagnosticCenterDao().displayDiagnosticCenter(id1)));
+			assertTrue(obj.equals(new DiagnosticCenterDaoImplementation().displayDiagnosticCenter(id1)));
 			}
 			catch(DiagnosticCenterException e)
 			{
 				
 			}
-			assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterDao().displayDiagnosticCenter(id2);});
+			assertThrows(DiagnosticCenterException.class,()->{new DiagnosticCenterDaoImplementation().displayDiagnosticCenter(id2);});
 		
 		}
 }
